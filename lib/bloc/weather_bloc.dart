@@ -14,28 +14,20 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc(this.weatherRepository, this.forecastRepository)
       : super(WeatherInitial()) {
     on<WeatherFetched>(_getCurrentWeather);
-    on<WeatherRelode>(_getRelode);
+    on<WeatherRelode>(_getCurrentWeather);
   }
-  void _getCurrentWeather(
-      WeatherFetched event, Emitter<WeatherState> emit) async {
+  void _getCurrentWeather(event, Emitter<WeatherState> emit) async {
     emit(WeatherLoading());
     try {
       final weather = await weatherRepository.getCurrentWeather();
       final forecast = await forecastRepository.getForecastWeather();
       emit(WeatherSucess(weather, forecast));
     } catch (e) {
-      emit(WeatherFailuar(e.toString()));
-    }
-  }
-
-  void _getRelode(WeatherRelode event, Emitter<WeatherState> emit) async {
-    emit(WeatherLoading());
-    try {
-      final weather = await weatherRepository.getCurrentWeather();
-      final forecast = await forecastRepository.getForecastWeather();
-      emit(WeatherSucess(weather, forecast));
-    } catch (e) {
-      emit(WeatherFailuar(e.toString()));
+      emit(
+        WeatherFailuar(
+          e.toString(),
+        ),
+      );
     }
   }
 }
