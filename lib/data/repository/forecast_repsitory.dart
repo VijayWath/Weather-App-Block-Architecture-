@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/Models/forcast_Model.dart';
+import 'package:weather_app/data/DataProvider/geo_location.dart';
 import 'package:weather_app/data/DataProvider/weather_data_Provider.dart';
 
 class ForecastRepository {
@@ -8,10 +10,9 @@ class ForecastRepository {
 
   ForecastRepository({required WeatherDataProvider weatherDataProvider})
       : _weatherDataProvider = weatherDataProvider;
-
   Future<List<ForcastModel>> getForecastWeather() async {
+    final cityName = await CurrentGeoLocation().determinePosition();
     try {
-      String cityName = 'Nagpur';
       final weatherData =
           await _weatherDataProvider.getCurrentWeather(cityName);
       final data = jsonDecode(weatherData);
