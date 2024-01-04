@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/Models/forcast_Model.dart';
 import 'package:weather_app/data/DataProvider/geo_location.dart';
 import 'package:weather_app/data/DataProvider/weather_data_Provider.dart';
